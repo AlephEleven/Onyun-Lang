@@ -1,0 +1,17 @@
+>> pipes!!! 🦀🦀🦀
+
+cell(
+    >>lets define a global variable
+    set a = 3,
+    
+    >>now lets make a private cell
+    set c = privcell(
+        set b = 3,
+        b
+    ),
+
+    >>inside the private cell, only variables defined inside will be considered
+    >>but we can get the value of b by setting it to global variable, c
+    
+    a+c
+)

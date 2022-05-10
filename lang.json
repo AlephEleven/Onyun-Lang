@@ -1,0 +1,46 @@
+{
+    "Lexer": 
+    {
+        "token-defs": 
+        {
+            "whitespace": [" ", "\n", "\t"],
+            "digit": [],
+            "letter": []
+        },
+        "token-syntax":
+        {
+            "+": "ADD",
+            "-": "SUB",
+            "*": "MUL",
+            "/": "DIV",
+            "%": "MOD",
+            "(": "CLBRAC",
+            ")": "CRBRAC",
+            "[": "SLBRAC",
+            "]": "SRBRAC",
+            "{": "FLBRAC",
+            "}": "FRBRAC",
+            "<": "ALBRAC",
+            ">": "ARBRAC",
+            "=": "EQUAL",
+            ",": "COMMA",
+            ";": "SEMICOLON",
+            "|": "LINE",
+            "\"": "QUOTE"
+        },
+        "token-id":
+            [
+                ">>",
+                "abs",
+                "max",
+                "min",
+                "int",
+                "float",
+                "exp",
+                "set",
+                "iszero",
+                "cell",
+                "privcell"
+            ]
+    }
+}
