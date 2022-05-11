@@ -166,6 +166,11 @@ def eval_expr(exp):
             res = return_expr(any_of_anyVal(eval_expr(v1[1])))
             g_env = temp
             return res
+        case "EEle":
+            (n) = valid_args(exp, 2)
+            index = num_of_numVal(eval_expr(n[1]))
+            ls = [any_of_anyVal(eval_expr(val)) for val in list_of_listVal(eval_expr(n[0]))]
+            return return_expr(ls[int(index)])
 
         case any:
             return error(f"Interp Error: Not Implemented ({any})")

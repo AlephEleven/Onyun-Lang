@@ -74,3 +74,10 @@ def string_of_stringVal(exp):
             return str(exp.vals.vals)
         case _:
             raise Exception("Expected a String!")
+
+def list_of_listVal(exp):
+    match exp.vals.id:
+        case "List":
+            return list(exp.vals.vals)
+        case _:
+            raise Exception("Expected a List!")

@@ -47,7 +47,8 @@
                 "numstr",
                 "concat",
                 "func",
-                "app"
+                "app",
+                "ele"
             ]
     }
 }
