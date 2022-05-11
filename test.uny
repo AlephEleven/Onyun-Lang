@@ -2,7 +2,6 @@
 
 cell
 (
-    set b = 2,
-    set f = func(a, a+b),
-    app(f, 2) |> int
+    set iseven = func(a, a%2 |> iszero),
+    app(iseven, 3)
 ) 

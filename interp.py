@@ -4,14 +4,14 @@ import math
 
 def expr(val, is_str=False):
     match val:
+        case bool(v):
+            return ast.expr_cls("Bool", v, f"Bool {v}")
         case float(v) | int(v):
             return ast.expr_cls("Num", v, f"Num {v}")
         case str(v) if is_str:
             return ast.expr_cls("String", v, f"String {v}")
         case str(v):
             return ast.expr_cls("Var", v, f"Var {v}")
-        case bool(v):
-            return ast.expr_cls("Bool", v, f"Bool {v}")
         case None:
             return ast.expr_cls("Unit", None, "Unit")
         case tuple(v):
@@ -148,7 +148,7 @@ def eval_expr(exp):
             (n) = valid_args(exp, 2)
             v1 = any_of_anyVal(eval_expr(n[0]))
             v2 = n[1]
-            temp = g_env
+            temp = dict(g_env)
             tempset(v1[0], v2)
             res = return_expr(any_of_anyVal(eval_expr(v1[1])))
             g_env = temp
