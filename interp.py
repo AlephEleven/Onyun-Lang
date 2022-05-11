@@ -2,10 +2,12 @@ from ds import *
 from readkw import *
 import math
 
-def expr(val):
+def expr(val, is_str=False):
     match val:
         case float(v) | int(v):
             return ast.expr_cls("Num", v, f"Num {v}")
+        case str(v) if is_str:
+            return ast.expr_cls("String", v, f"String {v}")
         case str(v):
             return ast.expr_cls("Var", v, f"Var {v}")
         case bool(v):
@@ -19,6 +21,8 @@ def string_of_expr(val):
             return f"Ok ({string_of_expr(val.vals)})"
         case "Num" | "Var" | "Bool":
             return f"{val.id} {val.vals}"
+        case "String":
+            return f'{val.id} "{val.vals}"'
         case "Unit":
             return val.id
 
@@ -37,6 +41,9 @@ def eval_expr(exp):
             (n) = exp
             return eval_expr(apply_env(n.vals, g_env))
         case "Bool":
+            (n) = exp
+            return return_exp(n)
+        case "String":
             (n) = exp
             return return_exp(n)
         case "Unit":

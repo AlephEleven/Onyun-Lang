@@ -36,6 +36,8 @@ class AbsTree:
                 return AbsTree.expr_cls("Var", v, f"Var {v}")
             case {"EXP": {"BOOL": v}}:
                 return AbsTree.expr_cls("Bool", v, f"Bool {v}")
+            case {"EXP": {"STRING": v}}:
+                return AbsTree.expr_cls("String", v, f"String {v}")
             case {"Func": (name, vs)}:
                 return AbsTree.expr_cls(name, [AbsTree.expr(v) for v in vs], f"{name[1:]} {[AbsTree.est(v) for v in vs]}")
             case {"Op": (name, vs)}:

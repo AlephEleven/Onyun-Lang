@@ -24,7 +24,7 @@ class Parser:
     def concrete_type(tok):
         match tok:
         # <Exp> ::= <ID> | <NUMBER>
-            case {"ID": tk} | {"NUMBER": tk}:
+            case {"ID": tk} | {"NUMBER": tk} | {"STRING": tk}:
                 if(tk in ["true", "false"]):
                     return {"EXP": {"BOOL": tk}}
                 else:

@@ -1,5 +1,7 @@
 >> pipes!!! 🦀🦀🦀
 
-cell(
-    set a = 1
+cell
+(
+    set a = "hello world",
+    a
 )
