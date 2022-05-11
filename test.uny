@@ -3,5 +3,5 @@
 cell
 (
     set iseven = func(a, a%2 |> iszero),
-    app(iseven, 3)
+    app(iseven, 2)
 ) 

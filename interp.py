@@ -12,10 +12,10 @@ def expr(val, is_str=False):
             return ast.expr_cls("String", v, f"String {v}")
         case str(v):
             return ast.expr_cls("Var", v, f"Var {v}")
-        case None:
-            return ast.expr_cls("Unit", None, "Unit")
         case tuple(v):
             return ast.expr_cls("Tuple", v, f"Tuple {v}")
+        case None:
+            return ast.expr_cls("Unit", None, "Unit")
 
 def string_of_expr(val):
     match val.id:
@@ -27,6 +27,8 @@ def string_of_expr(val):
             return f'{val.id} "{val.vals}"'
         case "Unit":
             return val.id
+        case _:
+            return f'{val.id} {[string_of_expr(i) for i in val.vals]}'
 
 def return_expr(val, is_str=False):
     return return_exp(expr(val, is_str))
