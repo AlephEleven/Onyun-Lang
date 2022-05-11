@@ -1,8 +1,5 @@
 >> pipes!!! 🦀🦀🦀
 
 cell(
-    set a = 3/2,
-    set b = 5,
-    set c = ((a*1, (b+3), abs(2-3)) |> max |> int - 8),
-    iszero(c)
+    set a = 1
 )

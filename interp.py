@@ -39,6 +39,9 @@ def eval_expr(exp):
         case "Bool":
             (n) = exp
             return return_exp(n)
+        case "Unit":
+            (n) = exp
+            return return_exp(n)
         case "EAdd":
             (n) = valid_args(exp, 2)
             v1 = num_of_numVal(eval_expr(n[0]))
