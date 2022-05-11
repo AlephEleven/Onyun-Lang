@@ -28,7 +28,6 @@ class AbsTree:
         print(f"{' '*space}Args: {expr_obj.arglen}")
 
     def expr(exp):
-
         match exp:
             case {"EXP": {"NUMBER": v}}:
                 return AbsTree.expr_cls("Num", v, f"Num {v}")
@@ -38,6 +37,8 @@ class AbsTree:
                 return AbsTree.expr_cls("Bool", v, f"Bool {v}")
             case {"EXP": {"STRING": v}}:
                 return AbsTree.expr_cls("String", v, f"String {v}")
+            case {"Func": ("EList", vs)}:
+                return AbsTree.expr_cls("List", [AbsTree.expr(v) for v in vs], f"List {[AbsTree.est(v) for v in vs]}")
             case {"Func": (name, vs)}:
                 return AbsTree.expr_cls(name, [AbsTree.expr(v) for v in vs], f"{name[1:]} {[AbsTree.est(v) for v in vs]}")
             case {"Op": (name, vs)}:

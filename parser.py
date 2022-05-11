@@ -41,7 +41,7 @@ class Parser:
     def apply_concrete(s_tok):
         return [Parser.concrete_type(tok) for tok in s_tok]
 
-    def exp_list_to_tk_arr(matching):
+    def exp_list_to_tk_arr(matching, end_key):
         '''
         Deals with multiple args
         '''
@@ -51,7 +51,7 @@ class Parser:
         for tk in matching:
             for key in tk:
                 i += 1
-                if key != exp_com_l[exp_com%2] and key=="CRBRAC":
+                if key != exp_com_l[exp_com%2] and key==end_key:
                     return (True, i)
                 if key != exp_com_l[exp_com%2]:
                     return (False, i)
@@ -70,10 +70,12 @@ class Parser:
         match cst, prec:
             case [], _:
                 return []
+            
             #<Exp> := set <Exp/Var> = <Exp>
             case [{'EXP': [{'KEY': 'set'}, {'EXP': {'ID': _}}]}, {"EQUAL": _}, {"EXP": _}, *t], 1:
                 exp1 = cst[0]["EXP"]
                 return [{"EXP": [exp1[0], {"EXP":[{"CLBRAC": "("}, exp1[1], {"COMMA": ","}, cst[2], {"CRBRAC": ")"}]} ]}] + Parser.concrete_defs(t, prec)
+            
             #<Exp> := <Exp> |> <Key>
             case [{"EXP": e}, {"LINE": _}, {"ARBRAC": _}, {"KEY": _}, *t], 7:
                 try:
@@ -81,21 +83,35 @@ class Parser:
                     return [{"EXP": [cst[3]]+[cst[0]]}] + Parser.concrete_defs(t, prec)
                 except:
                     return [{"EXP": [cst[3],{"EXP":[{"CLBRAC": "("}, cst[0], {"CRBRAC": ")"}]} ]}] + Parser.concrete_defs(t, prec)
+            
             #<Exp> := <Exp> <Op> <Exp>
             case [{"EXP": _}, {"OP":{"ADD": _} | {"SUB": _}}, {"EXP": _}, *t], 11:
                 return [{"EXP": cst[:3]}]+Parser.concrete_defs(t, prec)
             case [{"EXP": _}, {"OP":{"MUL":_} | {"DIV": _} | {"MOD": _}}, {"EXP": _}, *t], 12:
                 return [{"EXP": cst[:3]}]+Parser.concrete_defs(t, prec)
+            
+            #<Exp> := [<Exp>]
+            case [{"KEY": "list"}, {"EXP": _}, *t], 15:
+                return [{"EXP": cst[:2]}] + Parser.concrete_defs(t, prec)
+            
             #<Exp> := f(<Exp>)
             case [{"KEY": _}, {"EXP": _}, *t], 15:
                 return [{"EXP": cst[:2]}] + Parser.concrete_defs(t, prec)
+
             #<Exp> := (...args)
             case [{"CLBRAC": _},*t], 16:
-                exps = Parser.exp_list_to_tk_arr(t)
+                exps = Parser.exp_list_to_tk_arr(t, "CRBRAC")
                 if(exps[0]):
                     return [{"EXP": cst[:exps[1]]}]+Parser.concrete_defs(cst[exps[1]:], prec)
                 else:
                     return [{"CLBRAC": "("}]+Parser.concrete_defs(t, prec)
+            #<Exp> := [...args]
+            case [{"SLBRAC": _},*t], 16:
+                exps = Parser.exp_list_to_tk_arr(t, "SRBRAC")
+                if(exps[0]):
+                    return [{"KEY": "list"}, {"EXP": cst[:exps[1]]}]+Parser.concrete_defs(cst[exps[1]:], prec)
+                else:
+                    return [{"SLBRAC": "("}]+Parser.concrete_defs(t, prec)
             #<Exp> := (<Exp>)
             case [{"CLBRAC": _}, {"EXP": e}, {"CRBRAC": _}, *t], 16:
                 return [{"EXP": cst[:3]}]+Parser.concrete_defs(t, prec)

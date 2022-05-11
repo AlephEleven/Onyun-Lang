@@ -42,7 +42,7 @@ def any_of_anyVal(exp):
             return str(exp.vals.vals)
         case "Bool":
             return bool(exp.vals.vals) 
-        case "Tuple":
+        case "Tuple" | "List":
             return exp.vals.vals
         case _:
             return Exception("Type not found.")

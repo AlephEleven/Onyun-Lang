@@ -14,6 +14,8 @@ def expr(val, is_str=False):
             return ast.expr_cls("Var", v, f"Var {v}")
         case tuple(v):
             return ast.expr_cls("Tuple", v, f"Tuple {v}")
+        case list(v):
+            return ast.expr_cls("List", v, f"List {v}")
         case None:
             return ast.expr_cls("Unit", None, "Unit")
 
@@ -27,6 +29,8 @@ def string_of_expr(val):
             return f'{val.id} "{val.vals}"'
         case "Unit":
             return val.id
+        case "List":
+            return f'{val.id} {[string_of_expr(i) for i in val.vals]}'
         case _:
             return f'{val.id} {[string_of_expr(i) for i in val.vals]}'
 
@@ -57,6 +61,9 @@ def eval_expr(exp):
             (n) = exp
             return return_exp(n)
         case "Tuple":
+            (n) = exp
+            return return_exp(n)
+        case "List":
             (n) = exp
             return return_exp(n)
         case "EAdd":
@@ -122,10 +129,14 @@ def eval_expr(exp):
             return return_expr(None)
         case "ECell":
             (n) = valid_args(exp)
+            if (len(n)==0):
+                return return_expr(None)
             vs = [eval_expr(n1) for n1 in n[:-1]]+[n[-1]]
             return eval_expr(vs[-1])
         case "EPrivcell":
             (n) = valid_args(exp)
+            if (len(n)==0):
+                return return_expr(None)
             temp, g_env = g_env, {}     
             vs = [eval_expr(n1) for n1 in n[:-1]]+[n[-1]]
             res = eval_expr(vs[-1])

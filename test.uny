@@ -1,7 +1,7 @@
->> pipes!!! 🦀🦀🦀
+>> pog
 
 cell
 (
-    set iseven = func(a, a%2 |> iszero),
-    app(iseven, 2)
+    set a = [1,2,3],
+    a
 ) 
