@@ -14,6 +14,8 @@ def expr(val, is_str=False):
             return ast.expr_cls("Bool", v, f"Bool {v}")
         case None:
             return ast.expr_cls("Unit", None, "Unit")
+        case tuple(v):
+            return ast.expr_cls("Tuple", v, f"Tuple {v}")
 
 def string_of_expr(val):
     match val.id:
@@ -26,8 +28,11 @@ def string_of_expr(val):
         case "Unit":
             return val.id
 
-def return_expr(val):
-    return return_exp(expr(val))
+def return_expr(val, is_str=False):
+    return return_exp(expr(val, is_str))
+
+def tempset(var, val):
+    return eval_expr(ast.expr_cls("ESet", [var, val], f"ESet {[var, val]}"))
 
 g_env = {}
 
@@ -47,6 +52,9 @@ def eval_expr(exp):
             (n) = exp
             return return_exp(n)
         case "Unit":
+            (n) = exp
+            return return_exp(n)
+        case "Tuple":
             (n) = exp
             return return_exp(n)
         case "EAdd":
@@ -116,12 +124,33 @@ def eval_expr(exp):
             return eval_expr(vs[-1])
         case "EPrivcell":
             (n) = valid_args(exp)
-            temp = g_env
-            g_env = {}
-            
+            temp, g_env = g_env, {}     
             vs = [eval_expr(n1) for n1 in n[:-1]]+[n[-1]]
             res = eval_expr(vs[-1])
-            
+            g_env = temp
+            return res
+        case "EStrnum":
+            (n) = valid_args(exp)
+            vs = [string_of_stringVal(eval_expr(ni)) for ni in n]
+            return return_expr(float(''.join(vs)))
+        case "ENumstr":
+            (n) = valid_args(exp)
+            vs = [str(num_of_numVal(eval_expr(ni))) for ni in n]
+            return return_expr(''.join(vs), is_str=True)
+        case "EConcat":
+            (n) = valid_args(exp)
+            vs = [string_of_stringVal(eval_expr(ni)) for ni in n]
+            return return_expr(''.join(vs), is_str=True)
+        case "EFunc":
+            (n) = valid_args(exp, 2)
+            return return_expr((n[0], n[1]))
+        case "EApp":
+            (n) = valid_args(exp, 2)
+            v1 = any_of_anyVal(eval_expr(n[0]))
+            v2 = n[1]
+            temp = g_env
+            tempset(v1[0], v2)
+            res = return_expr(any_of_anyVal(eval_expr(v1[1])))
             g_env = temp
             return res
 

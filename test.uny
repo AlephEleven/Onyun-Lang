@@ -2,6 +2,7 @@
 
 cell
 (
-    set a = "hello world",
-    a
-)
+    set b = 2,
+    set f = func(a, a+b),
+    app(f, 2) |> int
+) 

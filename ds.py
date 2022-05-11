@@ -34,19 +34,18 @@ def apply_env(id, env, indx=0):
     else:
         raise Exception(f"{id} not found!")
 
-
-
-
-
-
 def any_of_anyVal(exp):
     match exp.vals.id:
         case "Num":
             return float(exp.vals.vals)
-        case "Var":
+        case "Var" | "String":
             return str(exp.vals.vals)
         case "Bool":
-            return str(exp.vals.vals) 
+            return bool(exp.vals.vals) 
+        case "Tuple":
+            return exp.vals.vals
+        case _:
+            return Exception("Type not found.")
 
 def num_of_numVal(exp):
     match exp.vals.id:
@@ -65,6 +64,13 @@ def var_of_varVal(exp):
 def bool_of_boolVal(exp):
     match exp.vals.id:
         case "Bool":
-            return str(exp.vals.vals)
+            return bool(exp.vals.vals)
         case _:
             raise Exception("Expected a Bool!")
+
+def string_of_stringVal(exp):
+    match exp.vals.id:
+        case "String":
+            return str(exp.vals.vals)
+        case _:
+            raise Exception("Expected a String!")

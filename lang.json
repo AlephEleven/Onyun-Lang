@@ -40,7 +40,12 @@
                 "set",
                 "iszero",
                 "cell",
-                "privcell"
+                "privcell",
+                "strnum",
+                "numstr",
+                "concat",
+                "func",
+                "app"
             ]
     }
 }
