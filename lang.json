@@ -50,7 +50,10 @@
                 "concat",
                 "func",
                 "app",
-                "ele"
+                "ele",
+                "push",
+                "head",
+                "tail"
             ]
     }
 }
