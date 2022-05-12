@@ -2,5 +2,7 @@
 
 cell
 (  
-    if !!!true then 1 else 2
+    set iseven = func(a, a%2 |> iszero),
+    set a = 1,
+    if app(iseven, a) then "Is Even" else "Is Odd"
 ) 
