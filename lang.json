@@ -48,13 +48,14 @@
                 "strnum",
                 "numstr",
                 "concat",
+                "strlen",
                 "func",
                 "app",
                 "ele",
                 "push",
                 "head",
                 "tail",
-                "isempty"
+                "arrlen"
             ]
     }
 }

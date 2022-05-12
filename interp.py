@@ -154,6 +154,10 @@ def eval_expr(exp):
             (n) = valid_args(exp)
             vs = [string_of_stringVal(eval_expr(ni)) for ni in n]
             return return_expr(''.join(vs), is_str=True)
+        case "EStrlen":
+            (n) = valid_args(exp, 1)
+            v = string_of_stringVal(eval_expr(n[0]))
+            return return_expr(len(v))
         case "EFunc":
             (n) = valid_args(exp, 2)
             return return_expr((n[0], n[1]))
@@ -181,10 +185,10 @@ def eval_expr(exp):
             v = list_of_listVal(eval_expr(n[0]))
             res = any_of_anyVal(eval_expr(v[0]))
             return return_expr(res)
-        case "EIsempty":
+        case "EArrlen":
             (n) = valid_args(exp, 1)
             v = list_of_listVal(eval_expr(n[0]))
-            return return_expr(bool(len(v)==0))
+            return return_expr(len(v))
         case "ETail":
             (n) = valid_args(exp, 1)
             v = list_of_listVal(eval_expr(n[0]))
