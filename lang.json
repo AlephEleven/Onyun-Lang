@@ -55,7 +55,10 @@
                 "push",
                 "head",
                 "tail",
-                "arrlen"
+                "arrlen",
+                "if",
+                "then",
+                "else"
             ]
     }
 }

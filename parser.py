@@ -75,7 +75,11 @@ class Parser:
             case [{'EXP': [{'KEY': 'set'}, {'EXP': {'ID': _}}]}, {"EQUAL": _}, {"EXP": _}, *t], 1:
                 exp1 = cst[0]["EXP"]
                 return [{"EXP": [exp1[0], {"EXP":[{"CLBRAC": "("}, exp1[1], {"COMMA": ","}, cst[2], {"CRBRAC": ")"}]} ]}] + Parser.concrete_defs(t, prec)
-            
+
+            #<Exp> := if <Bool> then <Exp> else <Exp>
+            case [{"EXP": [{"KEY": "if"},{"EXP": _}]}, {"EXP": [{"KEY": "then"}, {"EXP": _}]}, {"EXP": [{"KEY": "else"}, {"EXP": _}]}, *t], 5:
+                return [{"EXP": [{"KEY": "ite"},{"EXP":[{"CLBRAC": "("}, cst[0]["EXP"][1], {"COMMA": ","}, cst[1]["EXP"][1], {"COMMA": ","}, cst[2]["EXP"][1], {"CRBRAC": ")"}]} ]}] + Parser.concrete_defs(t, prec)
+
             #<Exp> := !<Bool>
             case [{'EXCLAMATION': _},{"EXP": _}, *t], 5:
                 return [{"EXP": [{"KEY": "not"},{"EXP":[{"CLBRAC": "("}, cst[1], {"CRBRAC": ")"}]} ]}] + Parser.concrete_defs(t, prec)

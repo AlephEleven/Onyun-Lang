@@ -207,7 +207,14 @@ def eval_expr(exp):
             (n) = valid_args(exp, 2)
             v1 = bool_of_boolVal(eval_expr(n[0]))
             v2 = bool_of_boolVal(eval_expr(n[1]))
-            return return_expr(bool(v1 or v2))     
+            return return_expr(bool(v1 or v2))
+        case "EIte":
+            (n) = valid_args(exp, 3)
+            v1 = bool_of_boolVal(eval_expr(n[0]))
+            if(v1):
+                return eval_expr(n[1])
+            else:
+                return eval_expr(n[2])  
 
         case any:
             return error(f"Interp Error: Not Implemented ({any})")
