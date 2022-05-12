@@ -4,5 +4,5 @@ cell
 (  
     set b = 2,
     set a = [b,1,3],
-    head(a)
+    a |> tail |> tail
 ) 

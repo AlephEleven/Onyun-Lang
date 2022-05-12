@@ -184,7 +184,7 @@ def eval_expr(exp):
         case "ETail":
             (n) = valid_args(exp, 1)
             v = list_of_listVal(eval_expr(n[0]))
-            res = [eval_expr(val) for val in v[1:]]
+            res = [eval_expr(val).vals for val in v[1:]]
             return return_expr(list(res))  
         case "ENot":
             (n) = valid_args(exp, 1)
