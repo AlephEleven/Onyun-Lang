@@ -28,7 +28,9 @@
             "|": "LINE",
             "\"": "QUOTE",
             "!": "EXCLAMATION",
-            "^": "UPARROW"
+            "^": "UPARROW",
+            "&": "AND",
+            "~": "OR"
         },
         "token-id":
             [

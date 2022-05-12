@@ -171,6 +171,20 @@ def eval_expr(exp):
             index = num_of_numVal(eval_expr(n[1]))
             ls = [any_of_anyVal(eval_expr(val)) for val in list_of_listVal(eval_expr(n[0]))]
             return return_expr(ls[int(index)])
+        case "ENot":
+            (n) = valid_args(exp, 1)
+            v = bool_of_boolVal(eval_expr(n[0]))
+            return return_expr(bool(not v))
+        case "EAnd":
+            (n) = valid_args(exp, 2)
+            v1 = bool_of_boolVal(eval_expr(n[0]))
+            v2 = bool_of_boolVal(eval_expr(n[1]))
+            return return_expr(bool(v1 and v2))
+        case "EOr":
+            (n) = valid_args(exp, 2)
+            v1 = bool_of_boolVal(eval_expr(n[0]))
+            v2 = bool_of_boolVal(eval_expr(n[1]))
+            return return_expr(bool(v1 or v2))      
 
         case any:
             return error(f"Interp Error: Not Implemented ({any})")

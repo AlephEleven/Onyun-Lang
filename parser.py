@@ -26,7 +26,7 @@ class Parser:
         # <Exp> ::= <ID> | <NUMBER>
             case {"ID": tk} | {"NUMBER": tk} | {"STRING": tk}:
                 if(tk in ["true", "false"]):
-                    return {"EXP": {"BOOL": tk}}
+                    return {"EXP": {"BOOL": True if tk=="true" else False}}
                 else:
                     return {"EXP": tok}
             # <BOp> ::= <+|-|*|/>
@@ -76,6 +76,18 @@ class Parser:
                 exp1 = cst[0]["EXP"]
                 return [{"EXP": [exp1[0], {"EXP":[{"CLBRAC": "("}, exp1[1], {"COMMA": ","}, cst[2], {"CRBRAC": ")"}]} ]}] + Parser.concrete_defs(t, prec)
             
+            #<Exp> := !<Bool>
+            case [{'EXCLAMATION': _},{"EXP": _}, *t], 5:
+                return [{"EXP": [{"KEY": "not"},{"EXP":[{"CLBRAC": "("}, cst[1], {"CRBRAC": ")"}]} ]}] + Parser.concrete_defs(t, prec)
+
+            #<Exp> := <Bool> & <Bool>
+            case [{"EXP": _}, {'AND': _}, {"EXP": _},  *t], 4:
+                return [{"EXP": [{"KEY": "and"},{"EXP":[{"CLBRAC": "("}, cst[0], {"COMMA": ","}, cst[2],  {"CRBRAC": ")"}]} ]}] + Parser.concrete_defs(t, prec)
+
+            #<Exp> := <Bool> ~ <Bool>
+            case [{"EXP": _}, {'OR': _}, {"EXP": _},  *t], 3:
+                return [{"EXP": [{"KEY": "or"},{"EXP":[{"CLBRAC": "("}, cst[0], {"COMMA": ","}, cst[2],  {"CRBRAC": ")"}]} ]}] + Parser.concrete_defs(t, prec)
+
             #<Exp> := <Exp> |> <Key>
             case [{"EXP": e}, {"LINE": _}, {"ARBRAC": _}, {"KEY": _}, *t], 7:
                 try:
