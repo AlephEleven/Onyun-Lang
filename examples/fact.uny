@@ -1,4 +1,4 @@
->> pog
+>> Calculates factorial of a
 
 cell
 (  
@@ -15,5 +15,7 @@ cell
             res
         ) |> cell
     ),
-    app(fact, 10)
+
+    set a = 5,
+    app(fact, a)
 ) 
