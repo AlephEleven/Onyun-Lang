@@ -92,7 +92,12 @@ def eval_expr(exp):
             (n) = valid_args(exp, 2)
             v1 = num_of_numVal(eval_expr(n[0]))
             v2 = num_of_numVal(eval_expr(n[1]))
-            return return_expr(v1%v2)       
+            return return_expr(v1%v2)
+        case "EExpo":
+            (n) = valid_args(exp, 2)
+            v1 = num_of_numVal(eval_expr(n[0]))
+            v2 = num_of_numVal(eval_expr(n[1]))
+            return return_expr(v1**v2)     
         case "EAbs":
             (n) = valid_args(exp, 1)
             v = num_of_numVal(eval_expr(n[0]))
@@ -178,7 +183,7 @@ def eval_expr(exp):
         case "EPush":
             (n) = valid_args(exp, 2)
             v1 = list_of_listVal(eval_expr(n[0]))
-            v2 = n[1]
+            v2 = eval_expr(n[1]).vals
             return return_expr(list([v2]+v1))  
         case "EHead":
             (n) = valid_args(exp, 1)
@@ -216,15 +221,14 @@ def eval_expr(exp):
             else:
                 return eval_expr(n[2])
         case "EWhile":
-            (n) = valid_args(exp)
+            (n) = valid_args(exp, 2)
             params = list_of_listVal(eval_expr(n[0]))
             if(len(params) != 1):
                 return error(f"For: Only takes 1 parameters! given {len(params)}")
             v1 = bool_of_boolVal(eval_expr(params[0]))
-            v2 = n[1:]
+            v2 = n[1]
             if(v1):
-                for i in v2:
-                    eval_expr(i)
+                eval_expr(v2)
                 eval_expr(exp)
 
         case any:

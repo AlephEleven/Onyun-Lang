@@ -30,7 +30,7 @@ class Parser:
                 else:
                     return {"EXP": tok}
             # <BOp> ::= <+|-|*|/>
-            case {"ADD": _} | {"SUB": _} | {"MUL": _} | {"DIV": _} | {"MOD": _}:
+            case {"ADD": _} | {"SUB": _} | {"MUL": _} | {"DIV": _} | {"MOD": _} | {"EXPO": _}:
                 return {"OP": tok}
             case other:
                 return other
@@ -105,6 +105,8 @@ class Parser:
                 return [{"EXP": cst[:3]}]+Parser.concrete_defs(t, prec)
             case [{"EXP": _}, {"OP":{"MUL":_} | {"DIV": _} | {"MOD": _}}, {"EXP": _}, *t], 12:
                 return [{"EXP": cst[:3]}]+Parser.concrete_defs(t, prec)
+            case [{"EXP": _}, {"OP":{"EXPO":_}}, {"EXP": _}, *t], 14:
+                return [{"EXP": cst[:3]}]+Parser.concrete_defs(t, prec)           
             
             #<Exp> := [<Exp>]
             case [{"KEY": "list"}, {"EXP": _}, *t], 15:

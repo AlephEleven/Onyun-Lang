@@ -28,7 +28,7 @@
             "|": "LINE",
             "\"": "QUOTE",
             "!": "EXCLAMATION",
-            "^": "UPARROW",
+            "^": "EXPO",
             "&": "AND",
             "~": "OR"
         },
