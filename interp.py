@@ -181,6 +181,10 @@ def eval_expr(exp):
             v = list_of_listVal(eval_expr(n[0]))
             res = any_of_anyVal(eval_expr(v[0]))
             return return_expr(res)
+        case "EIsempty":
+            (n) = valid_args(exp, 1)
+            v = list_of_listVal(eval_expr(n[0]))
+            return return_expr(bool(len(v)==0))
         case "ETail":
             (n) = valid_args(exp, 1)
             v = list_of_listVal(eval_expr(n[0]))

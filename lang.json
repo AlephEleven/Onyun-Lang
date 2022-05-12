@@ -53,7 +53,8 @@
                 "ele",
                 "push",
                 "head",
-                "tail"
+                "tail",
+                "isempty"
             ]
     }
 }
