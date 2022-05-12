@@ -214,7 +214,18 @@ def eval_expr(exp):
             if(v1):
                 return eval_expr(n[1])
             else:
-                return eval_expr(n[2])  
+                return eval_expr(n[2])
+        case "EWhile":
+            (n) = valid_args(exp)
+            params = list_of_listVal(eval_expr(n[0]))
+            if(len(params) != 1):
+                return error(f"For: Only takes 1 parameters! given {len(params)}")
+            v1 = bool_of_boolVal(eval_expr(params[0]))
+            v2 = n[1:]
+            if(v1):
+                for i in v2:
+                    eval_expr(i)
+                eval_expr(exp)
 
         case any:
             return error(f"Interp Error: Not Implemented ({any})")
