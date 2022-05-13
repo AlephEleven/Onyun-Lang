@@ -3,7 +3,8 @@
 cell
 (  
     import("examples/fact"),
-
-    app(fact, 5)
-
+    set num = 5,
+    set res = app(fact, num),
+    set prnt = tostring("The factorial of ", num, " = ", res),
+    print(prnt)
 ) 

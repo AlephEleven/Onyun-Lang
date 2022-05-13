@@ -61,7 +61,9 @@
                 "then",
                 "else",
                 "while",
-                "import"
+                "import",
+                "print",
+                "tostring"
             ]
     }
 }

@@ -242,6 +242,14 @@ def eval_expr(exp):
             except Exception as e:
                 print(e)
                 return return_expr(False)
+        case "ETostring":
+            (n) = valid_args(exp)
+            vs = ''.join([str(any_of_anyVal(eval_expr(ni))) for ni in n])
+            return return_expr(vs,is_str=True)
+        case "EPrint":
+            (n) = valid_args(exp, 1)
+            print("\033[1;34;40m print: \033[1;36;40m"+string_of_stringVal(eval_expr(n[0])))
+            return return_expr(None)      
 
         case any:
             return error(f"Interp Error: Not Implemented ({any})")
@@ -250,4 +258,4 @@ def interp(line):
     return eval_expr(ast.parse_AST(line))
 
 def interpS(line):
-    return "Onyun: "+string_of_expr(interp(line))
+    return "\033[1;33;40m Onyun: \033[1;36;40m"+string_of_expr(interp(line))
