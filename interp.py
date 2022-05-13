@@ -185,7 +185,12 @@ def eval_expr(exp):
             (n) = valid_args(exp, 2)
             v1 = list_of_listVal(eval_expr(n[0]))
             v2 = eval_expr(n[1]).vals
-            return return_expr(list([v2]+v1))  
+            return return_expr(list([v2]+v1))
+        case "EAppend":
+            (n) = valid_args(exp, 2)
+            v1 = list_of_listVal(eval_expr(n[0]))
+            v2 = eval_expr(n[1]).vals
+            return return_expr(list(v1+[v2]))  
         case "EHead":
             (n) = valid_args(exp, 1)
             v = list_of_listVal(eval_expr(n[0]))

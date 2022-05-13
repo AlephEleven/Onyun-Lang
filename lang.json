@@ -54,6 +54,7 @@
                 "app",
                 "ele",
                 "push",
+                "append",
                 "head",
                 "tail",
                 "arrlen",

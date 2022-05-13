@@ -1,0 +1,18 @@
+>> Implements map function, takes function and list returns [f(l_0), f(l_1) ...]
+
+cell
+(  
+    set map = func([f, l],
+        (
+            set res = [],
+            while([!(arrlen(l) |> iszero)],
+                (
+                set res = append(res, app(f, [head(l)])),
+                set l = tail(l)
+                ) |> cell
+            ),
+            res
+
+        ) |> cell
+    )
+) 
