@@ -2,11 +2,10 @@
 
 cell
 (  
-    set numbool = func(a, !iszero(a)),
     set fact = func(a,
         (
             set res = 1,
-            while([app(numbool, a)],
+            while([!iszero(a)],
                 (
                 set res = res*a,
                 set a = a-1
@@ -14,8 +13,5 @@ cell
             ),
             res
         ) |> cell
-    ),
-
-    set a = 5,
-    app(fact, a)
+    )
 ) 

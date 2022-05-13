@@ -2,6 +2,7 @@ from ds import *
 from readkw import *
 import math
 
+
 def expr(val, is_str=False):
     match val:
         case bool(v):
@@ -224,12 +225,23 @@ def eval_expr(exp):
             (n) = valid_args(exp, 2)
             params = list_of_listVal(eval_expr(n[0]))
             if(len(params) != 1):
-                return error(f"For: Only takes 1 parameters! given {len(params)}")
+                return error(f"For: Only takes 1 parameter! given {len(params)}")
             v1 = bool_of_boolVal(eval_expr(params[0]))
             v2 = n[1]
             if(v1):
                 eval_expr(v2)
                 eval_expr(exp)
+        case "EImport":
+            (n) = valid_args(exp, 1)
+            filepath = string_of_stringVal(eval_expr(n[0]))
+            try:
+                contents = open(filepath+".uny", "r").read()
+                interp(contents)
+                return return_expr(True)
+
+            except Exception as e:
+                print(e)
+                return return_expr(False)
 
         case any:
             return error(f"Interp Error: Not Implemented ({any})")
@@ -239,4 +251,3 @@ def interp(line):
 
 def interpS(line):
     return "Onyun: "+string_of_expr(interp(line))
-

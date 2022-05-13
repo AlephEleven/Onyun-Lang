@@ -1,0 +1,9 @@
+>> pog
+
+cell
+(  
+    import("examples/fact"),
+
+    app(fact, 5)
+
+) 

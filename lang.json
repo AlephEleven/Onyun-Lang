@@ -30,7 +30,8 @@
             "!": "EXCLAMATION",
             "^": "EXPO",
             "&": "AND",
-            "~": "OR"
+            "~": "OR",
+            "@": "AT"
         },
         "token-id":
             [
@@ -59,7 +60,8 @@
                 "if",
                 "then",
                 "else",
-                "while"
+                "while",
+                "import"
             ]
     }
 }

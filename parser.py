@@ -107,7 +107,7 @@ class Parser:
                 return [{"EXP": cst[:3]}]+Parser.concrete_defs(t, prec)
             case [{"EXP": _}, {"OP":{"EXPO":_}}, {"EXP": _}, *t], 14:
                 return [{"EXP": cst[:3]}]+Parser.concrete_defs(t, prec)           
-            
+                
             #<Exp> := [<Exp>]
             case [{"KEY": "list"}, {"EXP": _}, *t], 15:
                 return [{"EXP": cst[:2]}] + Parser.concrete_defs(t, prec)
