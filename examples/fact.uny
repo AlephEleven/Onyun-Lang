@@ -2,7 +2,7 @@
 
 cell
 (  
-    set fact = func(a,
+    set fact = func([a],
         (
             set res = 1,
             while([!iszero(a)],

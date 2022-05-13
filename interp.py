@@ -172,7 +172,7 @@ def eval_expr(exp):
             v1 = any_of_anyVal(eval_expr(n[0]))
             v2 = n[1]
             temp = dict(g_env)
-            tempset(v1[0], v2)
+            [tempset(v1[0].vals[i], v2.vals[i]) for i in range(len(v1[0].vals))]
             res = return_expr(any_of_anyVal(eval_expr(v1[1])))
             g_env = temp
             return res

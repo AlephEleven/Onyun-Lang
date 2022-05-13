@@ -7,7 +7,7 @@ cell
     set to = 5,
     while([!iszero(i-to-1)],
         (
-        print((i, "! = ", app(fact, i)) |> tostring),
+        print((i, "! = ", app(fact, [i])) |> tostring),
         set i = i+1
         ) |> cell
     )
