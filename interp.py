@@ -42,9 +42,9 @@ def tempset(var, val):
     return eval_expr(ast.expr_cls("ESet", [var, val], f"ESet {[var, val]}"))
 
 g_env = {}
-
+extend_path = ""
 def eval_expr(exp):
-    global g_env
+    global g_env, extend_path
     match exp.id:
         case "Num":
             (n) = exp
@@ -235,8 +235,10 @@ def eval_expr(exp):
             (n) = valid_args(exp, 1)
             filepath = string_of_stringVal(eval_expr(n[0]))
             try:
-                contents = open(filepath+".uny", "r").read()
+                contents = open(extend_path+filepath+".uny", "r").read()
+                extend_path = '/'.join(filepath.split("/")[:-1])+"/"
                 interp(contents)
+                extend_path = ""
                 return return_expr(True)
 
             except Exception as e:
