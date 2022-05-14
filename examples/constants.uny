@@ -1,0 +1,8 @@
+>> Gets constants as defined by python's math library
+
+cell
+(  
+    pycell("exec('import math')", "math"),
+    set Mathpi = pycell("math.pi"),
+    set Mathe = pycell("math.e")
+) 

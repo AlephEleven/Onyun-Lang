@@ -1,4 +1,4 @@
->> Implements map function, takes function and list returns [f(l_0), f(l_1) ...]
+>> Implements mapping functions
 
 cell
 (  
@@ -9,6 +9,21 @@ cell
                 (
                 set res = append(res, app(f, [head(l)])),
                 set l = tail(l)
+                ) |> cell
+            ),
+            res
+
+        ) |> cell
+    ),
+    set mapi = func([f, l],
+        (
+            set res = [],
+            set i = 0,
+            while([!(arrlen(l) |> iszero)],
+                (
+                set res = append(res, app(f, [i, head(l)])),
+                set l = tail(l),
+                set i = i+1
                 ) |> cell
             ),
             res

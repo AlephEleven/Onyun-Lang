@@ -64,7 +64,8 @@
                 "while",
                 "import",
                 "print",
-                "tostring"
+                "tostring",
+                "pycell"
             ]
     }
 }

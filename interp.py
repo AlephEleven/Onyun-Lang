@@ -256,7 +256,18 @@ def eval_expr(exp):
         case "EPrint":
             (n) = valid_args(exp, 1)
             print("\033[1;34;40m print: \033[1;36;40m"+string_of_stringVal(eval_expr(n[0])))
-            return return_expr(None)      
+            return return_expr(None)
+        case "EPycell":
+            (n) = valid_args(exp, 2)
+            pycode = string_of_stringVal(eval_expr(n[0]))
+            if(len(n)==2):
+                title = string_of_stringVal(eval_expr(n[1]))
+                print(f"\033[1;30;40mEntering PyEnv ({title}):\033[1;37;40m")
+            e = eval(pycode)
+            if(isinstance(e, list)):
+                e = [return_expr(i, is_str=True).vals for i in e]
+
+            return return_expr(e)
 
         case any:
             return error(f"Interp Error: Not Implemented ({any})")
