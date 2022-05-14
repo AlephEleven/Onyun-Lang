@@ -262,10 +262,14 @@ def eval_expr(exp):
             pycode = string_of_stringVal(eval_expr(n[0]))
             if(len(n)==2):
                 title = string_of_stringVal(eval_expr(n[1]))
-                print(f"\033[1;30;40mEntering PyEnv ({title}):\033[1;37;40m")
+                print(f"\033[1;30;40mEntering PyEnv ({title})\033[1;37;40m")
+                
             e = eval(pycode)
             if(isinstance(e, list)):
                 e = [return_expr(i, is_str=True).vals for i in e]
+
+            if(len(n)==2):
+                print(f"\033[1;30;40mExited PyEnv ({title})\033[1;37;40m")
 
             return return_expr(e)
 
