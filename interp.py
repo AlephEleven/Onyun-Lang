@@ -1,6 +1,7 @@
 from ds import *
 from readkw import *
 import math
+import random
 
 
 def expr(val, is_str=False):
@@ -272,6 +273,10 @@ def eval_expr(exp):
                 print(f"\033[1;30;40mExited PyEnv ({title})\033[1;37;40m")
 
             return return_expr(e)
+        case "ENice":
+            (n) = valid_args(exp)
+            vs = [num_of_numVal(eval_expr(nl)) for nl in n]
+            return return_expr(random.choice(vs))
 
         case any:
             return error(f"Interp Error: Not Implemented ({any})")

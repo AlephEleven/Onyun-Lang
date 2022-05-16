@@ -65,7 +65,8 @@
                 "import",
                 "print",
                 "tostring",
-                "pycell"
+                "pycell",
+                "nice"
             ]
     }
 }
