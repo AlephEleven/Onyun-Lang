@@ -106,7 +106,11 @@ class Parser:
             case [{"EXP": _}, {"OP":{"MUL":_} | {"DIV": _} | {"MOD": _}}, {"EXP": _}, *t], 12:
                 return [{"EXP": cst[:3]}]+Parser.concrete_defs(t, prec)
             case [{"EXP": _}, {"OP":{"EXPO":_}}, {"EXP": _}, *t], 14:
-                return [{"EXP": cst[:3]}]+Parser.concrete_defs(t, prec)           
+                return [{"EXP": cst[:3]}]+Parser.concrete_defs(t, prec)
+
+            case [{"EXP": _},{"EXP": [{"KEY": "list"}, {"EXP": [{"SLBRAC": "["}, indx, {"SRBRAC": "]"}]}]}, *t], 15:
+                ls = cst[0]
+                return  [{"EXP": [{"KEY": "ele"},{"EXP":[{"CLBRAC": "("}, ls, {"COMMA": ","}, indx,  {"CRBRAC": ")"}]} ]}] + Parser.concrete_defs(t, prec)
                 
             #<Exp> := [<Exp>]
             case [{"KEY": "list"}, {"EXP": _}, *t], 15:
