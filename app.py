@@ -7,7 +7,7 @@ from lexer import Lexer
 argv = sys.argv
 
 if(len(argv)!=3):
-    raise Exception("Run as: python3.10 [interp|cst|ast|tokens] [filename]")
+    raise Exception("Run as: python3.10 app.py [interp|cst|ast|tokens] [filename]")
 
 F = open(argv[2], "r")
 content = F.read()
